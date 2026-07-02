@@ -29,7 +29,9 @@ export default function App() {
   const [studyCategory, setStudyCategory] = useState('');
 
   const handleNavigate = useCallback((p: string) => {
-    if (p === 'studyByCategory') {
+    if (p === 'study') {
+      setPage('study');
+    } else if (p === 'studyByCategory') {
       setPage('studyByCategory');
     } else if (p === 'randomStudy') {
       setPage('randomStudy');
@@ -129,6 +131,8 @@ export default function App() {
   };
 
   const showBottomNav = !['fillBlank', 'choice'].includes(page);
+  const fullHeightPages = ['study', 'studyByCategory', 'randomStudy', 'wrongStudy', 'fillBlank', 'choice'];
+  const isFullHeight = fullHeightPages.includes(page);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col"
@@ -156,7 +160,7 @@ export default function App() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1" style={{ paddingBottom: showBottomNav ? '64px' : '0' }}>
+      <main className={`flex-1 ${isFullHeight ? 'overflow-hidden' : ''}`} style={{ paddingBottom: (!isFullHeight && showBottomNav) ? '64px' : '0' }}>
         {renderPage()}
       </main>
 
