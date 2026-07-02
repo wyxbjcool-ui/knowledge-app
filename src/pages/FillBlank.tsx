@@ -1,11 +1,15 @@
 import { useState, useRef, useEffect } from 'react';
-import { ArrowRight, Check, X as XIcon, RefreshCw } from 'lucide-react';
+import { ArrowRight, Check, X as XIcon, RefreshCw, ArrowLeft } from 'lucide-react';
 import { knowledgePoints } from '../data/knowledgePoints';
 import { useProgressStore } from '../store/progressStore';
 import { generateFillBlank, type FillBlankQuestion } from '../utils/fillBlankGenerator';
 import { fuzzyMatch } from '../utils/matching';
 
-export default function FillBlankPage() {
+interface Props {
+  onBack?: () => void;
+}
+
+export default function FillBlankPage({ onBack }: Props) {
   const { addToWrongList, tickStudyDay } = useProgressStore();
   const [questions, setQuestions] = useState<FillBlankQuestion[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -100,8 +104,16 @@ export default function FillBlankPage() {
     <div className="h-full flex flex-col" style={{
       height: 'calc(100dvh - 48px - env(safe-area-inset-top, 0px))',
     }}>
-      {/* 固定顶栏：进度与分数 */}
+      {/* 固定顶栏：进度与分数 + 返回按钮 */}
       <div className="shrink-0 flex items-center justify-between px-4 py-2.5 bg-gray-50/90 dark:bg-gray-950/90 border-b border-gray-200 dark:border-gray-700">
+        <button
+          onClick={onBack}
+          className="flex items-center gap-1 text-sm text-indigo-500 active:scale-95 touch-manipulation py-1 pr-3"
+          style={{ minHeight: '36px' }}
+        >
+          <ArrowLeft size={18} />
+          退出
+        </button>
         <span className="text-sm text-gray-500">
           {currentIdx + 1} / {questions.length}
         </span>

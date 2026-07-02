@@ -107,9 +107,9 @@ export default function App() {
       case 'wrongStudy':
         return <Study mode="wrong" onDone={handleDone} />;
       case 'fillBlank':
-        return <FillBlankPage />;
+        return <FillBlankPage onBack={handleDone} />;
       case 'choice':
-        return <ChoicePage />;
+        return <ChoicePage onBack={handleDone} />;
       case 'favorites':
         return <Favorites />;
       case 'categoryStudy':
